@@ -1,73 +1,79 @@
-# React + TypeScript + Vite
+# React 19 Lab
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Интерактивная демо-площадка для изучения новых возможностей React 19. Каждый раздел — работающий пример с комментариями в коде.
 
-Currently, two official plugins are available:
+## Что внутри
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+### Хуки React 19
 
-## React Compiler
+| Раздел | Что демонстрирует |
+|---|---|
+| `use()` | Чтение Promise и Context прямо в рендере — замена useEffect + useState для загрузки данных |
+| `useActionState` | Управление состоянием серверных action — замена ручного useState + isPending |
+| `useFormStatus` | Получение статуса формы из дочерних компонентов без prop drilling |
+| `useOptimistic` | Мгновенные обновления UI до ответа сервера (чат с оптимистичной отправкой) |
+| `useTransition` | Неблокирующие обновления — тяжёлая фильтрация без "зависания" интерфейса |
+| Изменения React 19 | ref как пропс, Context без Provider, cleanup ref-функции |
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+### Формы и валидация
 
-## Expanding the ESLint configuration
+| Раздел | Что демонстрирует |
+|---|---|
+| События форм | onChange, onBlur, onFocus, onSubmit — лог событий в реальном времени |
+| Vanilla-валидация | Кастомная валидация без библиотек |
+| Yup | Схемная валидация, декларативный подход |
+| Zod | TypeScript-first валидация с автовыводом типов через `z.infer` |
+| React Hook Form | useForm + useFieldArray — динамические формы с минимумом ре-рендеров |
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## Стек
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+- **React 19** + TypeScript
+- **Vite 7** — сборка и dev-сервер
+- **react-router-dom v7** — клиентская маршрутизация
+- **react-hook-form** — формы
+- **yup** / **zod** — валидация
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+## Запуск
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm install
+npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+Откроется на `http://localhost:5173`
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## Команды
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+| Команда | Описание |
+|---|---|
+| `npm run dev` | Dev-сервер с HMR |
+| `npm run build` | Сборка для продакшена |
+| `npm run preview` | Превью собранной версии |
+| `npm run lint` | Проверка ESLint |
+
+## Структура
+
+```
+src/
+├── components/
+│   └── Layout.tsx          # Общий layout с sidebar
+├── pages/
+│   ├── Home.tsx            # Главная — карта проектов
+│   ├── hooks/              # Демо хуков React 19
+│   │   ├── UseDemo.tsx
+│   │   ├── UseActionStateDemo.tsx
+│   │   ├── UseFormStatusDemo.tsx
+│   │   ├── UseOptimisticDemo.tsx
+│   │   ├── UseTransitionDemo.tsx
+│   │   └── React19Changes.tsx
+│   └── forms/              # Демо форм и валидации
+│       ├── EventsDemo.tsx
+│       ├── VanillaValidation.tsx
+│       ├── YupValidation.tsx
+│       ├── ZodValidation.tsx
+│       └── ReactHookFormDemo.tsx
+├── utils/
+│   └── api.ts              # Утилиты для имитации API
+├── App.tsx                 # Корневой компонент + роутинг
+└── main.tsx                # Точка входа
 ```
